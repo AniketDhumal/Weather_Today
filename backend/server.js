@@ -12,16 +12,18 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
+const cors = require('cors');
+
 const allowedOrigins = [
-  'https://weather-r3uf.vercel.app', // your frontend on Vercel
-  'http://localhost:3000'            // local dev (optional)
+  'https://weather-r3uf.vercel.app', // frontend
+  'http://localhost:3000'            // local dev
 ];
 
 app.use(cors({
-  origin: function(origin, callback){
-    if (!origin) return callback(null, true); // allow tools like curl, Postman
+  origin: function(origin, callback) {
+    if (!origin) return callback(null, true); // allow curl/postman
     if (allowedOrigins.indexOf(origin) === -1) {
-      return callback(new Error('CORS policy does not allow this origin.'), false);
+      return callback(new Error('CORS not allowed'), false);
     }
     return callback(null, true);
   }
@@ -62,6 +64,7 @@ if (process.env.NODE_ENV !== "production") {
     console.log(`🚀 Server running on http://localhost:${PORT}`)
   );
 }
+
 
 
 
