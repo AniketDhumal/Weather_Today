@@ -13,7 +13,7 @@ const app = express();
 app.use(express.json());
 
 const allowedOrigins = [
-  'https://weather-one-taupe-21.vercel.app', // your frontend on Vercel
+  'https://weather-r3uf.vercel.app', // your frontend on Vercel
   'http://localhost:3000'            // local dev (optional)
 ];
 
@@ -62,6 +62,7 @@ if (process.env.NODE_ENV !== "production") {
     console.log(`🚀 Server running on http://localhost:${PORT}`)
   );
 }
+
 
 
 
