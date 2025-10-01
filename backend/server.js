@@ -17,6 +17,10 @@ app.use(express.json());
 app.use("/api/weather", weatherRoutes);
 app.use("/api/favorites", favoriteRoutes);
 app.use("/api/messages", messageRoutes);
+app.get('/', (req, res) => {
+  res.send('Backend is running 🚀');
+});
+
 
 // Error handler
 app.use((err, req, res, next) => {
@@ -43,3 +47,4 @@ if (process.env.NODE_ENV !== "production") {
     console.log(`🚀 Server running on http://localhost:${PORT}`)
   );
 }
+
