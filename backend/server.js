@@ -10,8 +10,23 @@ import messageRoutes from "./routes/messages.js";
 dotenv.config();
 
 const app = express();
-app.use(cors());
 app.use(express.json());
+
+const allowedOrigins = [
+  'https://weather-r3uf.vercel.app', // your frontend on Vercel
+  'http://localhost:3000'            // local dev (optional)
+];
+
+app.use(cors({
+  origin: function(origin, callback){
+    if (!origin) return callback(null, true); // allow tools like curl, Postman
+    if (allowedOrigins.indexOf(origin) === -1) {
+      return callback(new Error('CORS policy does not allow this origin.'), false);
+    }
+    return callback(null, true);
+  }
+}));
+
 
 // Routes
 app.use("/api/weather", weatherRoutes);
@@ -47,4 +62,5 @@ if (process.env.NODE_ENV !== "production") {
     console.log(`🚀 Server running on http://localhost:${PORT}`)
   );
 }
+
 
