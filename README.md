@@ -12,7 +12,7 @@ It provides real-time weather updates, a 7-day forecast, favorites management, a
 * Search any city or use your current location (GPS)
 * Get real-time temperature, humidity, and wind speed
 * View a 7-day animated forecast via **Open-Meteo API**
-* Switch between °C / °F and Light / Dark themes
+* Switch between Light / Dark themes
 
 ### ⭐ Favorites System
 
