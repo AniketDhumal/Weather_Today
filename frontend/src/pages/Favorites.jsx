@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 
+const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 export default function Favorites() {
   const [favorites, setFavorites] = useState([]);
   const [form, setForm] = useState({ city: "", country: "" });
@@ -21,7 +23,7 @@ export default function Favorites() {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/favorites");
+        const res = await fetch(`${API}/api/favorites`);
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "Failed to load favorites");
         setFavorites(data);
@@ -43,9 +45,8 @@ export default function Favorites() {
     try {
       setLoading(true);
       setStatus("");
-      console.log("Sending city form:", form);
 
-      const res = await fetch("http://localhost:5000/api/favorites", {
+      const res = await fetch(`${API}/api/favorites`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -71,7 +72,7 @@ export default function Favorites() {
   const handleDeleteCity = async (id) => {
     try {
       setStatus("");
-      const res = await fetch(`http://localhost:5000/api/favorites/${id}`, {
+      const res = await fetch(`${API}/api/favorites/${id}`, {
         method: "DELETE",
       });
       const data = await res.json();
@@ -89,20 +90,17 @@ export default function Favorites() {
     e.preventDefault();
     try {
       setStatus("");
-      const res = await fetch(
-        `http://localhost:5000/api/favorites/${addForecastFor}/forecast`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            day: forecastForm.day,
-            temperature: Number(forecastForm.temperature),
-            humidity: Number(forecastForm.humidity),
-            wind: Number(forecastForm.wind),
-            icon: forecastForm.icon,
-          }),
-        }
-      );
+      const res = await fetch(`${API}/api/favorites/${addForecastFor}/forecast`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          day: forecastForm.day,
+          temperature: Number(forecastForm.temperature),
+          humidity: Number(forecastForm.humidity),
+          wind: Number(forecastForm.wind),
+          icon: forecastForm.icon,
+        }),
+      });
       const updated = await res.json();
       if (!res.ok) throw new Error(updated.error || "Failed to add forecast");
 
@@ -128,14 +126,11 @@ export default function Favorites() {
         icon: editForecast.icon,
       };
 
-      const res = await fetch(
-        `http://localhost:5000/api/favorites/${editForecast.cityId}/forecast/${editForecast._id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
-        }
-      );
+      const res = await fetch(`${API}/api/favorites/${editForecast.cityId}/forecast/${editForecast._id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
       const updated = await res.json();
       if (!res.ok) throw new Error(updated.error || "Failed to update forecast");
 
@@ -151,10 +146,7 @@ export default function Favorites() {
   const handleDeleteForecast = async (cityId, forecastId) => {
     try {
       setStatus("");
-      const res = await fetch(
-        `http://localhost:5000/api/favorites/${cityId}/forecast/${forecastId}`,
-        { method: "DELETE" }
-      );
+      const res = await fetch(`${API}/api/favorites/${cityId}/forecast/${forecastId}`, { method: "DELETE" });
       const updated = await res.json();
       if (!res.ok) throw new Error(updated.error || "Failed to delete forecast");
 
@@ -209,7 +201,7 @@ export default function Favorites() {
                   {fav.city || "Unknown City"}, {fav.country || "Unknown Country"}
                 </h3>
 
-                {/* Delete city button (was incorrectly calling handleDeleteForecast in header) */}
+                {/* Delete city button */}
                 <button onClick={() => handleDeleteCity(fav._id)}
                   className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600">
                   ❌ Delete City
