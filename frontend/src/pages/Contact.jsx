@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Mail, User, MessageSquare } from "lucide-react";
 import Footer from "../components/Footer";
 
+const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState(""); // success or error message
@@ -16,13 +18,14 @@ export default function Contact() {
     setStatus("");
 
     try {
-      const res = await fetch("http://localhost:5000/api/messages", {
+      const res = await fetch(`${API}/api/messages`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
 
-      if (!res.ok) throw new Error("Failed to send message");
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to send message");
 
       setStatus("✅ Message sent successfully!");
       setForm({ name: "", email: "", message: "" });
@@ -93,9 +96,7 @@ export default function Contact() {
           {/* Status */}
           {status && (
             <p
-              className={`text-center font-medium ${
-                status.startsWith("✅") ? "text-green-600" : "text-red-600"
-              }`}
+              className={`text-center font-medium ${status.startsWith("✅") ? "text-green-600" : "text-red-600"}`}
             >
               {status}
             </p>
