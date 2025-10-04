@@ -15,6 +15,9 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/health", (_req, res) => res.json({ ok: true }));
+app.get("/", (_req, res) => {
+  res.send("🌤️ Weather API backend is running.");
+});
 
 app.use("/api/weather", weatherRoutes);
 app.use("/api/favorites", favoriteRoutes);
@@ -47,3 +50,4 @@ const HOST = process.env.HOST || "0.0.0.0";
 app.listen(PORT, HOST, () => {
   console.log(`🚀 Server listening on ${HOST}:${PORT} (NODE_ENV=${process.env.NODE_ENV || "undefined"})`);
 });
+
