@@ -12,8 +12,6 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-const cors = require('cors');
-
 const allowedOrigins = [
   'https://weather-r3uf.vercel.app', // frontend
   'http://localhost:3000'            // local dev
@@ -64,6 +62,7 @@ if (process.env.NODE_ENV !== "production") {
     console.log(`🚀 Server running on http://localhost:${PORT}`)
   );
 }
+
 
 
 
