@@ -1,7 +1,7 @@
 # 🌤️ Weather Now
 
 <p align="center">
-  <a href="https://weather-today-3.onrender.com/" target="_blank"><b>🔥 Live Demo</b></a>
+  <a href="https://weather-app-3-3upr.onrender.com" target="_blank"><b>🔥 Live Demo</b></a>
 </p>
 
 **Weather Now** is a modern full-stack weather dashboard application built with **React**, **Vite**, **TailwindCSS**, **Express.js**, and **MongoDB**.
